@@ -23,7 +23,7 @@ for filepath in filepaths:
     pdf.cell(w=0, h=8, txt=f"Date: {date}", align='L', ln=1)
 
     #Empty cell to pad between header and table
-    #pdf.cell(w=0, h=12, ln=1)
+    pdf.cell(w=0, h=12, ln=1)
 
 
     #Create table
@@ -40,7 +40,9 @@ for filepath in filepaths:
     pdf.cell(w=30, h=8, txt=f"{columns[4]}", border=1, ln=1)
 
     #Table contents
+    total_price = 0
     for index, row in df.iterrows():
+        total_price += float(row["total_price"])
         pdf.set_font('Times', style="I", size=10)
         pdf.set_text_color(80, 80, 80)
         pdf.cell(w=30, h=8, txt=f"{row["product_id"]}", border=1)
@@ -48,6 +50,23 @@ for filepath in filepaths:
         pdf.cell(w=40, h=8, txt=f"{row["amount_purchased"]}", border=1)
         pdf.cell(w=30, h=8, txt=f"{row["price_per_unit"]}", border=1)
         pdf.cell(w=30, h=8, txt=f"{row["total_price"]}", border=1, ln=1)
+
+    pdf.set_font('Times', style="I", size=10)
+    pdf.set_text_color(80, 80, 80)
+    pdf.cell(w=30, h=8, border=1)
+    pdf.cell(w=60, h=8, border=1)
+    pdf.cell(w=40, h=8, border=1)
+    pdf.cell(w=30, h=8, border=1)
+    pdf.cell(w=30, h=8, txt=f"{total_price}", border=1, ln=1)
+
+    pdf.cell(w=0, h=12, ln=1)
+
+    #Below table
+    pdf.set_font('Arial', 'B', 24)
+    pdf.set_text_color(100, 100, 100)
+    pdf.cell(w=0, h=12, txt=f"The total due amount is ${total_price}.", ln=1)
+    pdf.cell(w=48, h=12, txt=f"JJPK, LLC.")
+    pdf.image("pythonhow.png", w=10)
 
 
 
